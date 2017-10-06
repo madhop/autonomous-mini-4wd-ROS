@@ -6,7 +6,7 @@
 #include "ros/ros.h"
 #include "std_msgs/String.h"
 #include <sstream>
-#include "../Lanes/src/lanes_detection.h"
+#include "lanes_detection.h"
 
 using namespace std;
 using namespace cv;
