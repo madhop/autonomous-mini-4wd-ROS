@@ -23,7 +23,7 @@ int main( int argc, char** argv ){
 
 
   //* Load video *
-  VideoCapture cap( argv[1]); // open the default camera
+  VideoCapture cap("http://192.168.1.6:8080/?action=stream");//argv[1]); // open the default camera
   if(!cap.isOpened()){  // check if we succeeded
     return -1;
   }
@@ -58,6 +58,7 @@ int right_ok_series = 0;
 int left_ok_series = 0;
 int right_similar_series = 0;
 int left_similar_series = 0;
+Point vanishing_point_avg = Point(0,0);
 
 int counter = 0;
 
@@ -68,13 +69,13 @@ int counter = 0;
     int turn = detectLanes(src,lastOkFittedRight, lastOkFittedLeft, lastOkRightRectCenters, lastOkLeftRectCenters,
                           lastFittedRight, lastFittedLeft, perspTransfInPoints, lastOkBetaLeft, lastOkBetaRight,
                           some_left, some_right, left_bad_series, right_bad_series, right_ok_series,
-                          left_ok_series, right_similar_series, left_similar_series, counter);
+                          left_ok_series, right_similar_series, left_similar_series, counter, vanishing_point_avg);
 
     //*** ROS send data ***
     std_msgs::String msg;
     std::stringstream ss;
 
-    cout << "turn!!!" << endl;
+    //cout << "turn!!!" << endl;
     ss << turn;
 
 
@@ -85,6 +86,12 @@ int counter = 0;
     ros::spinOnce();
     loop_rate.sleep();
     ++count;
+
+    //* Kill frame *
+    //waitKey(0);
+    if(waitKey(30) >= 0) break;
+    //* Write to video *
+    //outputVideo << src;
   }
   return 0;
 }
