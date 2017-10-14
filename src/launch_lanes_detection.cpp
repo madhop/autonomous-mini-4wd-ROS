@@ -23,7 +23,7 @@ int main( int argc, char** argv ){
 
 
   //* Load video *
-  VideoCapture cap("http://192.168.1.6:8080/?action=stream");//argv[1]); // open the default camera
+  VideoCapture cap(0);//"http://192.168.1.6:8080/?action=stream");//argv[1]); // open the default camera
   if(!cap.isOpened()){  // check if we succeeded
     return -1;
   }
@@ -87,11 +87,13 @@ int counter = 0;
     loop_rate.sleep();
     ++count;
 
-    //* Kill frame *
-    //waitKey(0);
-    if(waitKey(30) >= 0) break;
     //* Write to video *
     //outputVideo << src;
+
+    //* Kill frame *
+    waitKey(1);
+
+
   }
   return 0;
 }
